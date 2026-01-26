@@ -22,25 +22,35 @@
 
 ```
 ionic-monorepo/
-├── ionic-app/                    # Основное Ionic Angular приложение
+├── libs/                        # Библиотеки монорепозитория
+│   └── i18n/                   # Библиотека локализации
+│       ├── src/
+│       │   ├── lib/
+│       │   │   ├── assets/    # Файлы переводов
+│       │   │   │   └── i18n/  # JSON файлы для каждого языка
+│       │   │   └── services/  # Сервисы локализации
+│       │   └── index.ts       # Public API библиотеки
+│       ├── project.json        # NX конфигурация библиотеки
+│       └── tsconfig.*.json     # TypeScript конфигурации
+├── ionic-app/                  # Основное Ionic Angular приложение
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── pages/           # Страницы приложения
-│   │   │   │   └── home/       # Пример домашней страницы
-│   │   │   ├── app-module.ts   # Главный модуль приложения
-│   │   │   ├── app.routes.ts   # Конфигурация роутинга
-│   │   │   └── app.html        # Корневой компонент
-│   │   ├── index.html          # HTML точка входа
-│   │   ├── main.ts             # TypeScript точка входа
-│   │   └── styles.scss         # Глобальные стили (включая Ionic)
+│   │   │   ├── pages/         # Страницы приложения
+│   │   │   │   └── home/     # Пример домашней страницы
+│   │   │   ├── app-module.ts # Главный модуль приложения
+│   │   │   ├── app.routes.ts # Конфигурация роутинга
+│   │   │   └── app.html      # Корневой компонент
+│   │   ├── index.html         # HTML точка входа
+│   │   ├── main.ts            # TypeScript точка входа
+│   │   └── styles.scss        # Глобальные стили (включая Ionic)
 │   ├── vite.config.mts         # Конфигурация Vite
 │   ├── project.json            # NX конфигурация проекта
 │   └── tsconfig.*.json         # TypeScript конфигурации
 ├── ionic-app-e2e/              # E2E тесты (Playwright)
 ├── nx.json                      # Конфигурация NX workspace
 ├── package.json                # Зависимости и скрипты
-├── pnpm-workspace.yaml         # Конфигурация pnpm workspace
-└── tsconfig.base.json          # Базовая TypeScript конфигурация
+├── pnpm-workspace.yaml          # Конфигурация pnpm workspace
+└── tsconfig.base.json           # Базовая TypeScript конфигурация
 ```
 
 ### Система сборки
@@ -244,9 +254,11 @@ nx run ionic-app:cap --cmd="open android"
 
 Проект использует **Transloco** для поддержки множества языков. Transloco - это современная, легковесная библиотека для локализации Angular приложений с поддержкой runtime переключения языков.
 
+Локализация вынесена в отдельную библиотеку `@ionic-monorepo/i18n` в монорепозитории для переиспользования между проектами.
+
 ### Структура переводов
 
-Файлы переводов находятся в `ionic-app/src/assets/i18n/`:
+Файлы переводов находятся в библиотеке `libs/i18n/src/lib/assets/i18n/`:
 
 ```
 ionic-app/src/assets/i18n/
@@ -275,7 +287,7 @@ ionic-app/src/assets/i18n/
 
 ```typescript
 import { TranslocoService } from '@jsverse/transloco';
-import { LanguageService } from './services/language.service';
+import { LanguageService } from '@ionic-monorepo/i18n';
 
 export class MyComponent {
   constructor(
@@ -320,7 +332,7 @@ const name = languageService.getLanguageName('ru'); // 'Русский'
 
 ### Добавление нового языка
 
-1. **Создайте файл перевода** в `ionic-app/src/assets/i18n/`:
+1. **Создайте файл перевода** в `libs/i18n/src/lib/assets/i18n/`:
    ```json
    // de.json (немецкий)
    {
@@ -341,10 +353,22 @@ const name = languageService.getLanguageName('ru'); // 'Русский'
    })
    ```
 
-3. **Обновите `LanguageService`**:
+3. **Обновите `LanguageService`** в `libs/i18n/src/lib/services/language.service.ts`:
    ```typescript
    private readonly SUPPORTED_LANGUAGES: SupportedLanguage[] = ['ru', 'en', 'de'];
    ```
+
+### Использование библиотеки i18n
+
+Библиотека `@ionic-monorepo/i18n` экспортирует:
+- `LanguageService` - сервис для управления языками
+- `TranslocoHttpLoaderService` - HTTP loader для загрузки переводов
+- `SupportedLanguage` - тип для поддерживаемых языков
+
+Импортируйте из библиотеки:
+```typescript
+import { LanguageService, TranslocoHttpLoaderService } from '@ionic-monorepo/i18n';
+```
 
 ### Особенности
 

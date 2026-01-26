@@ -22,7 +22,7 @@
           },
           {
             "glob": "**/*",
-            "input": "ionic-app/src/assets",
+            "input": "libs/i18n/src/lib/assets",
             "output": "assets"
           }
         ],

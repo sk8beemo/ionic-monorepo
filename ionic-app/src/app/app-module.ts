@@ -11,7 +11,7 @@ import {
 import { App } from './app';
 import { appRoutes } from './app.routes';
 import { HomeComponent } from './pages/home/home.component';
-import { TranslocoHttpLoaderService } from './services/transloco-http-loader.service';
+import { TranslocoHttpLoaderService } from '@ionic-monorepo/i18n';
 
 @NgModule({
   declarations: [App, HomeComponent],

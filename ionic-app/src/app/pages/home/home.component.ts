@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { LanguageService } from '../../services/language.service';
+import { LanguageService } from '@ionic-monorepo/i18n';
 
 @Component({
   selector: 'app-home',
