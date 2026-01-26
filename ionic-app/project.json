@@ -19,6 +19,11 @@
           {
             "glob": "**/*",
             "input": "ionic-app/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "ionic-app/src/assets",
+            "output": "assets"
           }
         ],
         "styles": ["ionic-app/src/styles.scss"]

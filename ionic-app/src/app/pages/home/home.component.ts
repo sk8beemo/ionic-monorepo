@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-home',
@@ -7,5 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  title = 'Ionic Angular App';
+  public translocoService = inject(TranslocoService);
+  public languageService = inject(LanguageService);
+
+  toggleLanguage(): void {
+    this.languageService.toggleLanguage();
+  }
 }

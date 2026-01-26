@@ -16,6 +16,7 @@
 - **TypeScript 5.9** - Типизированный JavaScript
 - **Vitest** - Фреймворк для тестирования
 - **Playwright** - E2E тестирование
+- **Transloco (@jsverse/transloco)** - Локализация и интернационализация (i18n)
 
 ### Структура монорепозитория
 
@@ -71,6 +72,7 @@ ionic-monorepo/
 - Unit тесты (Vitest)
 - E2E тесты (Playwright)
 - Линтинг (ESLint)
+- **Локализация (i18n)** - поддержка множества языков через Transloco
 
 ✅ **Доступно после настройки:**
 - Сборки под iOS/Android через Capacitor
@@ -237,6 +239,127 @@ pnpm run:android
 nx run ionic-app:cap --cmd="sync ios"
 nx run ionic-app:cap --cmd="open android"
 ```
+
+## Локализация (i18n) с Transloco
+
+Проект использует **Transloco** для поддержки множества языков. Transloco - это современная, легковесная библиотека для локализации Angular приложений с поддержкой runtime переключения языков.
+
+### Структура переводов
+
+Файлы переводов находятся в `ionic-app/src/assets/i18n/`:
+
+```
+ionic-app/src/assets/i18n/
+├── ru.json    # Русский язык
+└── en.json    # Английский язык
+```
+
+### Использование в компонентах
+
+#### В шаблонах (HTML)
+
+```html
+<!-- Простое использование -->
+<h1>{{ 'home.title' | transloco }}</h1>
+
+<!-- С параметрами -->
+<p>{{ 'welcome.message' | transloco: { name: userName } }}</p>
+
+<!-- Структурная директива -->
+<div *transloco="let t">
+  <h1>{{ t('home.title') }}</h1>
+</div>
+```
+
+#### В TypeScript компонентах
+
+```typescript
+import { TranslocoService } from '@jsverse/transloco';
+import { LanguageService } from './services/language.service';
+
+export class MyComponent {
+  constructor(
+    private translocoService: TranslocoService,
+    public languageService: LanguageService
+  ) {}
+
+  getTranslation(): string {
+    return this.translocoService.translate('home.title');
+  }
+
+  changeLanguage(): void {
+    this.languageService.setLanguage('en');
+    // или
+    this.languageService.toggleLanguage();
+  }
+}
+```
+
+### Управление языками
+
+Используйте `LanguageService` для управления языками:
+
+```typescript
+import { LanguageService } from './services/language.service';
+
+// Получить текущий язык
+const currentLang = languageService.getCurrentLanguage(); // 'ru' | 'en'
+
+// Установить язык
+languageService.setLanguage('en');
+
+// Переключить язык
+languageService.toggleLanguage();
+
+// Получить список поддерживаемых языков
+const languages = languageService.getSupportedLanguages();
+
+// Получить название языка
+const name = languageService.getLanguageName('ru'); // 'Русский'
+```
+
+### Добавление нового языка
+
+1. **Создайте файл перевода** в `ionic-app/src/assets/i18n/`:
+   ```json
+   // de.json (немецкий)
+   {
+     "common": {
+       "welcome": "Willkommen"
+     }
+   }
+   ```
+
+2. **Обновите конфигурацию** в `app-module.ts`:
+   ```typescript
+   provideTransloco({
+     config: {
+       availableLangs: ['ru', 'en', 'de'], // Добавьте новый язык
+       defaultLang: 'ru',
+       // ...
+     }
+   })
+   ```
+
+3. **Обновите `LanguageService`**:
+   ```typescript
+   private readonly SUPPORTED_LANGUAGES: SupportedLanguage[] = ['ru', 'en', 'de'];
+   ```
+
+### Особенности
+
+- ✅ **Runtime переключение** - смена языка без перезагрузки приложения
+- ✅ **Lazy loading** - переводы загружаются по требованию
+- ✅ **TypeScript поддержка** - автодополнение и проверка типов
+- ✅ **Сохранение выбора** - язык сохраняется в localStorage
+- ✅ **Плюрализация** - поддержка множественных форм
+- ✅ **Интерполяция** - вставка переменных в переводы
+
+### Примеры использования
+
+Смотрите реализацию в `HomeComponent` (`ionic-app/src/app/pages/home/`) для примеров использования локализации.
+
+[Learn more about Transloco &raquo;](https://jsverse.gitbook.io/transloco/)
 
 [Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
 

@@ -1,0 +1,25 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "hello": "Hello",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "home": {
+    "title": "Home Page",
+    "subtitle": "Welcome to Ionic Angular App",
+    "description": "This is an example of a localized app with multi-language support"
+  },
+  "language": {
+    "select": "Select Language",
+    "russian": "Russian",
+    "english": "English"
+  }
+}
