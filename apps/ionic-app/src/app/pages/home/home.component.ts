@@ -29,7 +29,6 @@ export class HomeComponent {
   }
 
   onAboutClick(): void {
-    // TODO: Navigate to about screen
-    console.log('About clicked');
+    this.router.navigate(['/about']);
   }
 }

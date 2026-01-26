@@ -1,0 +1,82 @@
+{
+  "ru": {
+    "title": "О игре",
+    "gameName": "Vinyl Scratch Master",
+    "version": "0.0.0",
+    "status": "В разработке",
+    "description": "Vinyl Scratch Master — залипная ритм-игра для мобильных устройств, где вы играете роль диджея и управляете виниловой пластинкой. Ваша задача — крутить пластинку в ритм музыки, попадая иглой на появляющиеся маркеры в нужный момент.",
+    "concept": {
+      "title": "Концепция",
+      "items": [
+        "Ритм-игра — точное попадание в такт музыки",
+        "Симулятор диджея — управление виниловой пластинкой",
+        "Аркада — залипный геймплей с системой очков и комбо"
+      ]
+    },
+    "gameplay": {
+      "title": "Основной геймплей",
+      "sections": [
+        {
+          "title": "Виниловая пластинка",
+          "description": "В центре экрана находится виниловая пластинка, которая вращается, имитируя реальную вертушку. По краю пластинки движется игла."
+        },
+        {
+          "title": "Маркеры (ноты)",
+          "description": "По краю пластинки появляются цветные маркеры в ритм музыки. Нужно крутить пластинку так, чтобы игла попадала на маркеры в момент их активации."
+        },
+        {
+          "title": "Управление",
+          "description": "Свайп по кругу для вращения пластинки. Плавное вращение с инерцией для реалистичности."
+        },
+        {
+          "title": "Система очков",
+          "description": "Perfect — точное попадание (максимальные очки), Good — небольшое отклонение, Miss — промах (потеря комбо). Последовательные попадания увеличивают множитель очков."
+        }
+      ]
+    },
+    "visualStyle": {
+      "title": "Визуальный стиль",
+      "description": "Минималистичный дизайн с темной темой, имитирующей атмосферу клуба/диджей-сета. Простая графика с плавными анимациями."
+    }
+  },
+  "en": {
+    "title": "About",
+    "gameName": "Vinyl Scratch Master",
+    "version": "0.0.0",
+    "status": "In Development",
+    "description": "Vinyl Scratch Master is an addictive rhythm game for mobile devices where you play as a DJ and control a vinyl record. Your task is to spin the record to the rhythm of the music, hitting the appearing markers with the needle at the right moment.",
+    "concept": {
+      "title": "Concept",
+      "items": [
+        "Rhythm game — precise timing to the music",
+        "DJ simulator — control a vinyl record",
+        "Arcade — addictive gameplay with scoring and combo system"
+      ]
+    },
+    "gameplay": {
+      "title": "Main Gameplay",
+      "sections": [
+        {
+          "title": "Vinyl Record",
+          "description": "A vinyl record is located in the center of the screen, rotating to simulate a real turntable. A needle moves along the edge of the record."
+        },
+        {
+          "title": "Markers (Notes)",
+          "description": "Colored markers appear along the edge of the record to the rhythm of the music. You need to spin the record so that the needle hits the markers at the moment of their activation."
+        },
+        {
+          "title": "Controls",
+          "description": "Swipe in a circle to rotate the record. Smooth rotation with inertia for realism."
+        },
+        {
+          "title": "Scoring System",
+          "description": "Perfect — precise hit (maximum points), Good — slight deviation, Miss — miss (combo loss). Consecutive hits increase the score multiplier."
+        }
+      ]
+    },
+    "visualStyle": {
+      "title": "Visual Style",
+      "description": "Minimalist design with a dark theme, imitating the atmosphere of a club/DJ set. Simple graphics with smooth animations."
+    }
+  }
+}

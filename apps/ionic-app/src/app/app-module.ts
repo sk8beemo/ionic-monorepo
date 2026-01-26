@@ -11,10 +11,11 @@ import {
 import { App } from './app';
 import { appRoutes } from './app.routes';
 import { HomeComponent } from './pages/home/home.component';
+import { AboutComponent } from './pages/about/about.component';
 import { TranslocoHttpLoaderService } from '@ionic-monorepo/i18n';
 
 @NgModule({
-  declarations: [App, HomeComponent],
+  declarations: [App, HomeComponent, AboutComponent],
   imports: [
     BrowserModule,
     CommonModule,

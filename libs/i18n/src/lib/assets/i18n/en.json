@@ -10,7 +10,8 @@
     "next": "Next",
     "loading": "Loading...",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "retry": "Retry"
   },
   "home": {
     "title": "Home Page",

@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ aboutData()?.title || ('menu.about' | transloco) }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="about-content">
+  <div class="about-background"></div>
+
+  <div class="about-container" *ngIf="!loading() && !error() && aboutData()">
+    <!-- Header Card -->
+    <ion-card class="header-card">
+      <ion-card-header>
+        <ion-card-title>{{ aboutData()!.gameName }}</ion-card-title>
+        <ion-card-subtitle>
+          {{ 'menu.about' | transloco }} • {{ aboutData()!.version }} • {{ aboutData()!.status }}
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ aboutData()!.description }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Concept Card -->
+    <ion-card *ngIf="aboutData()!.concept">
+      <ion-card-header>
+        <ion-card-title>{{ aboutData()!.concept.title }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list lines="none">
+          <ion-item *ngFor="let item of aboutData()!.concept.items">
+            <ion-icon name="musical-note" slot="start" color="primary"></ion-icon>
+            <ion-label>{{ item }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Gameplay Card -->
+    <ion-card *ngIf="aboutData()!.gameplay">
+      <ion-card-header>
+        <ion-card-title>{{ aboutData()!.gameplay.title }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list lines="none">
+          <ion-item *ngFor="let section of aboutData()!.gameplay.sections" class="gameplay-item">
+            <ion-icon name="disc" slot="start" color="secondary"></ion-icon>
+            <ion-label>
+              <h3>{{ section.title }}</h3>
+              <p>{{ section.description }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Visual Style Card -->
+    <ion-card *ngIf="aboutData()!.visualStyle">
+      <ion-card-header>
+        <ion-card-title>{{ aboutData()!.visualStyle.title }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ aboutData()!.visualStyle.description }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading()">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>{{ 'common.loading' | transloco }}</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error() && !loading()">
+    <ion-icon name="alert-circle" size="large" color="danger"></ion-icon>
+    <p>{{ error() }}</p>
+    <ion-button (click)="loadAboutData()">
+      {{ 'common.retry' | transloco }}
+    </ion-button>
+  </div>
+</ion-content>
