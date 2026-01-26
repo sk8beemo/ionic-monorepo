@@ -1,0 +1,9 @@
+{
+  "name": "ionic-app-e2e",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "ionic-app-e2e/src",
+  "implicitDependencies": ["ionic-app"],
+  "// targets": "to see all targets run: nx show project ionic-app-e2e --web",
+  "targets": {}
+}

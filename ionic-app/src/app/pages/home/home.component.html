@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      {{ title }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Добро пожаловать в Ionic!</ion-card-title>
+        <ion-card-subtitle>Монорепозиторий с NX, Vite и pnpm</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Ваше приложение успешно настроено и готово к разработке.</p>
+        <ion-button expand="block" color="primary">
+          Начать работу
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
