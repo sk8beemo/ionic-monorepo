@@ -11,6 +11,7 @@
     "gen": "nx generate @nxext/capacitor:configuration --project ionic-app",
     "test": "nx test ionic-app",
     "lint": "nx lint ionic-app",
+    "graph": "nx graph",
     "cap:add:ios": "nx run ionic-app:cap --cmd=\"add ios\"",
     "cap:add:android": "nx run ionic-app:cap --cmd=\"add android\"",
     "cap:sync": "pnpm build && nx run ionic-app:cap --cmd=\"sync\"",

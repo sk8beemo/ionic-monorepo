@@ -43,6 +43,10 @@ Thumbs.db
 
 .angular
 
+# NX Graph artifacts
+static/
+graph.html
+
 vitest.config.*.timestamp*
 
 # Capacitor / native platforms
