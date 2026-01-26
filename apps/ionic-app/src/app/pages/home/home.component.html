@@ -1,74 +1,44 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      {{ 'home.title' | transloco }}
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="menu-content">  
+  <div class="menu-background"></div>
+  <div class="menu-container">
+    <!-- Language Toggle - Top -->
+    <div class="language-toggle-container">
+      <ion-segment
+        [value]="languageService.getCurrentLanguage()"
+        (ionChange)="onLanguageChange($event)"
+        color="light"
+      >
+        <ion-segment-button value="ru">
+          <ion-label>{{ 'language.russian' | transloco }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="en">
+          <ion-label>{{ 'language.english' | transloco }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ 'home.title' | transloco }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <!-- Menu Buttons - Center -->
+    <div class="menu-buttons">
+      <ion-button
+        expand="block"
+        size="large"
+        class="menu-button play-button"
+        (click)="onPlayClick()"
+      >
+        <ion-icon name="play" slot="start"></ion-icon>
+        {{ 'menu.play' | transloco }}
+      </ion-button>
 
-  <div id="container">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{ 'common.welcome' | transloco }}</ion-card-title>
-        <ion-card-subtitle>{{ 'home.subtitle' | transloco }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <p>{{ 'home.description' | transloco }}</p>
-        <ion-button expand="block" color="primary">
-          {{ 'common.next' | transloco }}
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{ 'language.select' | transloco }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-list>
-          <ion-item
-            button
-            (click)="languageService.setLanguage('ru')"
-            [class.selected]="languageService.getCurrentLanguage() === 'ru'"
-          >
-            <ion-label>{{ 'language.russian' | transloco }}</ion-label>
-            <ion-icon
-              *ngIf="languageService.getCurrentLanguage() === 'ru'"
-              name="checkmark"
-              slot="end"
-              color="primary"
-            ></ion-icon>
-          </ion-item>
-          <ion-item
-            button
-            (click)="languageService.setLanguage('en')"
-            [class.selected]="languageService.getCurrentLanguage() === 'en'"
-          >
-            <ion-label>{{ 'language.english' | transloco }}</ion-label>
-            <ion-icon
-              *ngIf="languageService.getCurrentLanguage() === 'en'"
-              name="checkmark"
-              slot="end"
-              color="primary"
-            ></ion-icon>
-          </ion-item>
-        </ion-list>
-        <ion-button
-          expand="block"
-          fill="outline"
-          (click)="toggleLanguage()"
-          style="margin-top: 16px"
-        >
-          {{ 'common.next' | transloco }}: {{ languageService.getLanguageName(languageService.getCurrentLanguage() === 'ru' ? 'en' : 'ru') }}
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
+      <ion-button
+        expand="block"
+        size="large"
+        fill="outline"
+        class="menu-button about-button"
+        (click)="onAboutClick()"
+      >
+        <ion-icon name="information-circle" slot="start"></ion-icon>
+        {{ 'menu.about' | transloco }}
+      </ion-button>
+    </div>
   </div>
 </ion-content>

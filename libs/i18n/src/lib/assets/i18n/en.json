@@ -17,6 +17,11 @@
     "subtitle": "Welcome to Ionic Angular App",
     "description": "This is an example of a localized app with multi-language support"
   },
+  "menu": {
+    "play": "Play",
+    "about": "About",
+    "language": "Language"
+  },
   "language": {
     "select": "Select Language",
     "russian": "Russian",

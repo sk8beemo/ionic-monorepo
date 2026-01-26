@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
-import { LanguageService } from '@ionic-monorepo/i18n';
+import { LanguageService, SupportedLanguage } from '@ionic-monorepo/i18n';
+import { SegmentCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +13,23 @@ import { LanguageService } from '@ionic-monorepo/i18n';
 export class HomeComponent {
   public translocoService = inject(TranslocoService);
   public languageService = inject(LanguageService);
+  private router = inject(Router);
 
-  toggleLanguage(): void {
-    this.languageService.toggleLanguage();
+  onLanguageChange(event: Event): void {
+    const customEvent = event as SegmentCustomEvent;
+    const language = customEvent.detail.value as SupportedLanguage;
+    if (language) {
+      this.languageService.setLanguage(language);
+    }
+  }
+
+  onPlayClick(): void {
+    // TODO: Navigate to game screen
+    console.log('Play clicked');
+  }
+
+  onAboutClick(): void {
+    // TODO: Navigate to about screen
+    console.log('About clicked');
   }
 }
