@@ -143,27 +143,7 @@ pnpm build:prod
 nx build ionic-app --configuration=production
 ```
 
-#### Шаг 3: Генерация Capacitor проекта
-
-Используйте генератор Nx для правильной настройки Capacitor в монорепозитории:
-
-```sh
-nx generate @nxext/capacitor:configuration --project ionic-app
-# или
-pnpm run gen
-```
-
-Генератор создаст:
-- `capacitor.config.ts` в папке `ionic-app/` (не в корне!)
-- Правильную конфигурацию для монорепозитория
-- Nx targets для работы с Capacitor
-
-Опции генератора:
-- `--appId` - ID приложения (по умолчанию: `io.ionic.starter`)
-- `--appName` - Имя приложения
-- `--webDir` - Директория собранных веб-ресурсов (автоматически определяется)
-
-#### Шаг 4: Добавление нативных платформ
+#### Шаг 3: Добавление нативных платформ
 
 После генерации добавьте поддержку iOS и Android:
 
