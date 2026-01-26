@@ -60,7 +60,7 @@ ionic-monorepo/
 - ✅ **IonicModule** подключен в `AppModule`
 - ✅ **Ionic стили** импортированы в `styles.scss`
 - ✅ **Ionic компоненты** доступны для использования
-- ⚠️ **Capacitor НЕ настроен** - мобильные сборки (iOS/Android) пока недоступны
+- ✅ **Capacitor готов к настройке** - используйте генератор `@nxext/capacitor:capacitor-project`
 
 ### Текущие возможности
 
@@ -72,10 +72,10 @@ ionic-monorepo/
 - E2E тесты (Playwright)
 - Линтинг (ESLint)
 
-⚠️ **Требует настройки:**
-- Capacitor для мобильных платформ (iOS/Android)
+✅ **Доступно после настройки:**
+- Сборки под iOS/Android через Capacitor
 - Нативные плагины и API
-- Сборка под мобильные устройства
+- Запуск на реальных устройствах и эмуляторах
 
 ## Быстрый старт
 
@@ -114,72 +114,149 @@ pnpm lint
 nx lint ionic-app
 ```
 
-## ⚠️ Важная информация о Capacitor
+## Мобильные сборки (iOS / Android) через Capacitor
 
-### Текущее состояние
+### Предварительные требования
 
-**Ionic подключен и работает**, но **Capacitor не настроен**. Это означает:
+- **iOS**: macOS, Xcode, CocoaPods
+- **Android**: Android Studio, Android SDK (и JDK)
 
-✅ **Что работает:**
-- Веб-версия приложения полностью функциональна
-- Все Ionic компоненты доступны и работают в браузере
-- Можно разрабатывать и тестировать UI/UX в браузере
-- Production сборка для веб-деплоя
+### Настройка Capacitor в монорепозитории Nx
 
-❌ **Что НЕ работает:**
-- Сборка под iOS (`npx cap add ios`)
-- Сборка под Android (`npx cap add android`)
-- Доступ к нативным API (камера, геолокация, push-уведомления и т.д.)
-- Запуск на реальных устройствах или эмуляторах
-- Публикация в App Store / Google Play
+В монорепозитории Nx используется плагин `@nxext/capacitor`, который правильно интегрирует Capacitor с Nx.
 
-### Что нужно для настройки Capacitor
+#### Шаг 1: Установка зависимостей
 
-Для включения мобильных сборок потребуется:
+```sh
+pnpm install
+```
 
-1. **Установить Capacitor зависимости:**
-   ```sh
-   pnpm add @capacitor/core @capacitor/cli
-   pnpm add -D @capacitor/ios @capacitor/android
-   ```
+Это установит все необходимые зависимости, включая `@capacitor/core`, `@capacitor/cli`, `@capacitor/ios`, `@capacitor/android`.
 
-2. **Создать `capacitor.config.ts`** в корне проекта с настройками:
-   ```typescript
-   import { CapacitorConfig } from '@capacitor/cli';
-   
-   const config: CapacitorConfig = {
-     appId: 'com.example.ionicapp',
-     appName: 'Ionic App',
-     webDir: 'dist/ionic-app',
-     server: {
-       androidScheme: 'https'
-     }
-   };
-   
-   export default config;
-   ```
+#### Шаг 2: Сборка проекта
 
-3. **Инициализировать платформы:**
-   ```sh
-   npx cap add ios
-   npx cap add android
-   ```
+Перед настройкой Capacitor необходимо собрать проект:
 
-4. **Настроить NX задачи** для синхронизации с Capacitor после сборки:
-   - Добавить задачу `sync` в `project.json`
-   - Настроить автоматическую синхронизацию после `build`
+```sh
+pnpm build:prod
+# или
+nx build ionic-app --configuration=production
+```
 
-5. **Установить нативные зависимости:**
-   - Для iOS: Xcode и CocoaPods (`pod install` в `ios/`)
-   - Для Android: Android Studio и Android SDK
+#### Шаг 3: Генерация Capacitor проекта
 
-### Рекомендации
+Используйте генератор Nx для правильной настройки Capacitor в монорепозитории:
 
-Если планируется разработка мобильного приложения, рекомендуется настроить Capacitor на раннем этапе, чтобы:
-- Проверять работу на реальных устройствах
-- Тестировать нативные плагины
-- Обеспечить корректную работу на мобильных платформах
-- Выявлять проблемы совместимости заранее
+```sh
+nx generate @nxext/capacitor:configuration --project ionic-app
+# или
+pnpm run gen
+```
+
+Генератор создаст:
+- `capacitor.config.ts` в папке `ionic-app/` (не в корне!)
+- Правильную конфигурацию для монорепозитория
+- Nx targets для работы с Capacitor
+
+Опции генератора:
+- `--appId` - ID приложения (по умолчанию: `io.ionic.starter`)
+- `--appName` - Имя приложения
+- `--webDir` - Директория собранных веб-ресурсов (автоматически определяется)
+
+#### Шаг 4: Добавление нативных платформ
+
+После генерации добавьте поддержку iOS и Android:
+
+```sh
+# Добавить iOS
+nx run ionic-app:cap --cmd="add ios"
+# или
+pnpm cap:add:ios
+
+# Добавить Android
+nx run ionic-app:cap --cmd="add android"
+# или
+pnpm cap:add:android
+```
+
+### Работа с мобильными платформами
+
+#### Синхронизация после сборки
+
+После изменений в веб-коде синхронизируйте с нативными проектами:
+
+```sh
+# Синхронизация iOS
+nx run ionic-app:cap --cmd="sync ios"
+# или
+pnpm cap:sync:ios
+
+# Синхронизация Android
+nx run ionic-app:cap --cmd="sync android"
+# или
+pnpm cap:sync:android
+
+# Или синхронизация всех платформ
+nx run ionic-app:cap --cmd="sync"
+# или
+pnpm cap:sync
+```
+
+#### Открытие в IDE
+
+```sh
+# Открыть iOS проект в Xcode
+nx run ionic-app:cap --cmd="open ios"
+# или
+pnpm cap:open:ios
+
+# Открыть Android проект в Android Studio
+nx run ionic-app:cap --cmd="open android"
+# или
+pnpm cap:open:android
+```
+
+#### Запуск на симуляторе/эмуляторе
+
+```sh
+# Запустить на iOS симуляторе
+nx run ionic-app:cap --cmd="run ios"
+# или
+pnpm run:ios
+
+# Запустить на Android эмуляторе
+nx run ionic-app:cap --cmd="run android"
+# или
+pnpm run:android
+```
+
+### Важные замечания для монорепозитория
+
+1. **Конфигурация находится в папке проекта**: `ionic-app/capacitor.config.ts` (не в корне!)
+2. **Используйте executor `cap`**: команды Capacitor выполняются через `nx run ionic-app:cap --cmd="<команда>"`
+3. **Зависимости плагинов**: Capacitor плагины должны быть добавлены в `package.json` в корне монорепозитория
+4. **Путь к сборке**: `webDir` автоматически указывает на `dist/ionic-app` благодаря генератору
+5. **Все команды через executor**: `add`, `sync`, `open`, `run` - все выполняется через `cap` executor с параметром `cmd`
+
+### Полезные команды
+
+```sh
+# Полная сборка и синхронизация для iOS
+pnpm build:ios
+
+# Полная сборка и синхронизация для Android
+pnpm build:android
+
+# Сборка, синхронизация и запуск iOS
+pnpm run:ios
+
+# Сборка, синхронизация и запуск Android
+pnpm run:android
+
+# Или через Nx напрямую
+nx run ionic-app:cap --cmd="sync ios"
+nx run ionic-app:cap --cmd="open android"
+```
 
 [Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
 

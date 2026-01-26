@@ -87,6 +87,9 @@
         "port": 4200,
         "spa": true
       }
+    },
+    "cap": {
+      "executor": "@nxext/capacitor:cap"
     }
   }
 }
