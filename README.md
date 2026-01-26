@@ -32,21 +32,21 @@ ionic-monorepo/
 │       │   └── index.ts       # Public API библиотеки
 │       ├── project.json        # NX конфигурация библиотеки
 │       └── tsconfig.*.json     # TypeScript конфигурации
-├── ionic-app/                  # Основное Ionic Angular приложение
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── pages/         # Страницы приложения
-│   │   │   │   └── home/     # Пример домашней страницы
-│   │   │   ├── app-module.ts # Главный модуль приложения
-│   │   │   ├── app.routes.ts # Конфигурация роутинга
-│   │   │   └── app.html      # Корневой компонент
-│   │   ├── index.html         # HTML точка входа
-│   │   ├── main.ts            # TypeScript точка входа
-│   │   └── styles.scss        # Глобальные стили (включая Ionic)
-│   ├── vite.config.mts         # Конфигурация Vite
-│   ├── project.json            # NX конфигурация проекта
-│   └── tsconfig.*.json         # TypeScript конфигурации
-├── ionic-app-e2e/              # E2E тесты (Playwright)
+├── apps/                       # Приложения монорепозитория
+│   └── ionic-app/              # Основное Ionic Angular приложение
+│       ├── src/
+│       │   ├── app/
+│       │   │   ├── pages/         # Страницы приложения
+│       │   │   │   └── home/     # Пример домашней страницы
+│       │   │   ├── app-module.ts # Главный модуль приложения
+│       │   │   ├── app.routes.ts # Конфигурация роутинга
+│       │   │   └── app.html      # Корневой компонент
+│       │   ├── index.html         # HTML точка входа
+│       │   ├── main.ts            # TypeScript точка входа
+│       │   └── styles.scss        # Глобальные стили (включая Ionic)
+│       ├── vite.config.mts         # Конфигурация Vite
+│       ├── project.json            # NX конфигурация проекта
+│       └── tsconfig.*.json         # TypeScript конфигурации
 ├── nx.json                      # Конфигурация NX workspace
 ├── package.json                # Зависимости и скрипты
 ├── pnpm-workspace.yaml          # Конфигурация pnpm workspace
@@ -224,7 +224,7 @@ pnpm run:android
 
 ### Важные замечания для монорепозитория
 
-1. **Конфигурация находится в папке проекта**: `ionic-app/capacitor.config.ts` (не в корне!)
+1. **Конфигурация находится в папке проекта**: `apps/ionic-app/capacitor.config.ts` (не в корне!)
 2. **Используйте executor `cap`**: команды Capacitor выполняются через `nx run ionic-app:cap --cmd="<команда>"`
 3. **Зависимости плагинов**: Capacitor плагины должны быть добавлены в `package.json` в корне монорепозитория
 4. **Путь к сборке**: `webDir` автоматически указывает на `dist/ionic-app` благодаря генератору
@@ -261,7 +261,7 @@ nx run ionic-app:cap --cmd="open android"
 Файлы переводов находятся в библиотеке `libs/i18n/src/lib/assets/i18n/`:
 
 ```
-ionic-app/src/assets/i18n/
+libs/i18n/src/lib/assets/i18n/
 ├── ru.json    # Русский язык
 └── en.json    # Английский язык
 ```
@@ -381,7 +381,7 @@ import { LanguageService, TranslocoHttpLoaderService } from '@ionic-monorepo/i18
 
 ### Примеры использования
 
-Смотрите реализацию в `HomeComponent` (`ionic-app/src/app/pages/home/`) для примеров использования локализации.
+Смотрите реализацию в `HomeComponent` (`apps/ionic-app/src/app/pages/home/`) для примеров использования локализации.
 
 [Learn more about Transloco &raquo;](https://jsverse.gitbook.io/transloco/)
 

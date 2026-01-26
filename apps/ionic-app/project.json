@@ -1,9 +1,9 @@
 {
   "name": "ionic-app",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "ionic-app/src",
+  "sourceRoot": "apps/ionic-app/src",
   "tags": [],
   "targets": {
     "build": {
@@ -11,14 +11,14 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/ionic-app",
-        "index": "ionic-app/src/index.html",
-        "main": "ionic-app/src/main.ts",
-        "tsConfig": "ionic-app/tsconfig.app.json",
+        "index": "apps/ionic-app/src/index.html",
+        "main": "apps/ionic-app/src/main.ts",
+        "tsConfig": "apps/ionic-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "ionic-app/public"
+            "input": "apps/ionic-app/public"
           },
           {
             "glob": "**/*",
@@ -26,7 +26,7 @@
             "output": "assets"
           }
         ],
-        "styles": ["ionic-app/src/styles.scss"]
+        "styles": ["apps/ionic-app/src/styles.scss"]
       },
       "configurations": {
         "production": {
@@ -81,7 +81,7 @@
       "executor": "@nx/vitest:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../coverage/ionic-app"
+        "reportsDirectory": "../../coverage/ionic-app"
       }
     },
     "serve-static": {
