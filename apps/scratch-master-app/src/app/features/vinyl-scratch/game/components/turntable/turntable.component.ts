@@ -12,12 +12,14 @@ import { RhythmService } from '../../services/rhythm.service';
 import { ScoringService } from '../../services/scoring.service';
 import { Marker } from '../../models/marker.model';
 
+/* eslint-disable @angular-eslint/prefer-standalone */
 @Component({
   selector: 'app-turntable',
   standalone: false,
   templateUrl: './turntable.component.html',
   styleUrl: './turntable.component.scss',
 })
+/* eslint-enable @angular-eslint/prefer-standalone */
 export class TurntableComponent implements OnInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -168,7 +170,8 @@ export class TurntableComponent implements OnInit, OnDestroy {
   /**
    * Обработка окончания клика мыши
    */
-  private onMouseUp(event: MouseEvent): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private onMouseUp(_event: MouseEvent): void {
     this.isDragging = false;
   }
 

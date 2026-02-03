@@ -4,12 +4,14 @@ import { TranslocoService } from '@jsverse/transloco';
 import { LanguageService, SupportedLanguage } from '@ionic-monorepo/i18n';
 import { SegmentCustomEvent } from '@ionic/angular';
 
+/* eslint-disable @angular-eslint/prefer-standalone */
 @Component({
   selector: 'app-home',
   standalone: false,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
+/* eslint-enable @angular-eslint/prefer-standalone */
 export class HomeComponent {
   public translocoService = inject(TranslocoService);
   public languageService = inject(LanguageService);

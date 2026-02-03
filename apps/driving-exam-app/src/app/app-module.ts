@@ -4,13 +4,10 @@ import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-  provideTransloco,
-  TranslocoModule,
-} from '@jsverse/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { App } from './app';
 import { appRoutes } from './app.routes';
-import { TranslocoHttpLoaderService } from '@ionic-monorepo/i18n';
+import { provideMonorepoI18n } from '@ionic-monorepo/i18n';
 import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
@@ -25,14 +22,10 @@ import { HomeComponent } from './pages/home/home.component';
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(),
-    provideTransloco({
-      config: {
-        availableLangs: ['ru', 'en'],
-        defaultLang: 'ru',
-        reRenderOnLangChange: true,
-        prodMode: false,
-      },
-      loader: TranslocoHttpLoaderService,
+    ...provideMonorepoI18n({
+      appId: 'driving-exam-app',
+      availableLangs: ['ru', 'en'],
+      defaultLang: 'ru',
     }),
   ],
   bootstrap: [App],

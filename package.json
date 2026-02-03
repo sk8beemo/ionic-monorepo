@@ -35,7 +35,11 @@
     "run:ios:vinyl": "pnpm build:prod && nx run scratch-master-app:cap --cmd=\"sync ios\" && nx run scratch-master-app:cap --cmd=\"run ios\"",
     "run:android:vinyl": "pnpm build:prod && nx run scratch-master-app:cap --cmd=\"sync android\" && nx run scratch-master-app:cap --cmd=\"run android\"",
     "run:ios:exam": "pnpm build:prod:exam && nx run driving-exam-app:cap --cmd=\"sync ios\" && nx run driving-exam-app:cap --cmd=\"run ios\"",
-    "run:android:exam": "pnpm build:prod:exam && nx run driving-exam-app:cap --cmd=\"sync android\" && nx run driving-exam-app:cap --cmd=\"run android\""
+    "run:android:exam": "pnpm build:prod:exam && nx run driving-exam-app:cap --cmd=\"sync android\" && nx run driving-exam-app:cap --cmd=\"run android\"",
+    "i18n:check": "node tools/i18n/validate.mjs",
+    "lint:all": "nx run-many -t lint --all",
+    "lint:affected": "nx affected:lint --base=main",
+    "prepare": "husky"
   },
   "private": true,
   "devDependencies": {
@@ -67,7 +71,6 @@
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
     "@types/node": "20.19.9",
-    "typed-assert": "^1.0.9",
     "@typescript-eslint/utils": "^8.40.0",
     "@vitest/coverage-v8": "^4.0.0",
     "@vitest/ui": "^4.0.8",
@@ -75,9 +78,11 @@
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-playwright": "^1.6.2",
+    "husky": "^9.1.7",
     "jsdom": "^27.1.0",
     "nx": "^22.4.1",
     "prettier": "~3.6.2",
+    "typed-assert": "^1.0.9",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",
     "vite": "^7.0.0",

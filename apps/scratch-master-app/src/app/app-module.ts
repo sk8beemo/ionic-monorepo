@@ -4,15 +4,12 @@ import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-  provideTransloco,
-  TranslocoModule,
-} from '@jsverse/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { App } from './app';
 import { appRoutes } from './app.routes';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
-import { TranslocoHttpLoaderService } from '@ionic-monorepo/i18n';
+import { provideMonorepoI18n } from '@ionic-monorepo/i18n';
 import { GameComponent } from './features/vinyl-scratch/game/game.component';
 import { TurntableComponent } from './features/vinyl-scratch/game/components/turntable/turntable.component';
 
@@ -28,14 +25,10 @@ import { TurntableComponent } from './features/vinyl-scratch/game/components/tur
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(),
-    provideTransloco({
-      config: {
-        availableLangs: ['ru', 'en'],
-        defaultLang: 'ru',
-        reRenderOnLangChange: true,
-        prodMode: false,
-      },
-      loader: TranslocoHttpLoaderService,
+    ...provideMonorepoI18n({
+      appId: 'scratch-master-app',
+      availableLangs: ['ru', 'en'],
+      defaultLang: 'ru',
     }),
   ],
   bootstrap: [App],

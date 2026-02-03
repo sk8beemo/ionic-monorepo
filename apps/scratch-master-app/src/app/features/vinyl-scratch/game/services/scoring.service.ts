@@ -8,6 +8,7 @@ import { HitType } from '../models/marker.model';
 export class ScoringService {
   private score = signal<Score>(this.createInitialScore());
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
 
   /**

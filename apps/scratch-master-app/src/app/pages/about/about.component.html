@@ -3,20 +3,21 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ aboutData()?.title || ('menu.about' | transloco) }}</ion-title>
+    <ion-title>{{ aboutData()?.title || ('app.menu.about' | transloco) }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="about-content">
   <div class="about-background"></div>
 
+  <!-- eslint-disable-next-line @angular-eslint/template/prefer-control-flow -->
   <div class="about-container" *ngIf="!loading() && !error() && aboutData()">
     <!-- Header Card -->
     <ion-card class="header-card">
       <ion-card-header>
         <ion-card-title>{{ aboutData()!.gameName }}</ion-card-title>
         <ion-card-subtitle>
-          {{ 'menu.about' | transloco }} • {{ aboutData()!.version }} • {{ aboutData()!.status }}
+          {{ 'app.menu.about' | transloco }} • {{ aboutData()!.version }} • {{ aboutData()!.status }}
         </ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
@@ -25,12 +26,14 @@
     </ion-card>
 
     <!-- Concept Card -->
+    <!-- eslint-disable-next-line @angular-eslint/template/prefer-control-flow -->
     <ion-card *ngIf="aboutData()!.concept">
       <ion-card-header>
         <ion-card-title>{{ aboutData()!.concept.title }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-list lines="none">
+          <!-- eslint-disable-next-line @angular-eslint/template/prefer-control-flow -->
           <ion-item *ngFor="let item of aboutData()!.concept.items">
             <ion-icon name="musical-note" slot="start" color="primary"></ion-icon>
             <ion-label>{{ item }}</ion-label>
@@ -40,12 +43,14 @@
     </ion-card>
 
     <!-- Gameplay Card -->
+    <!-- eslint-disable-next-line @angular-eslint/template/prefer-control-flow -->
     <ion-card *ngIf="aboutData()!.gameplay">
       <ion-card-header>
         <ion-card-title>{{ aboutData()!.gameplay.title }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-list lines="none">
+          <!-- eslint-disable-next-line @angular-eslint/template/prefer-control-flow -->
           <ion-item *ngFor="let section of aboutData()!.gameplay.sections" class="gameplay-item">
             <ion-icon name="disc" slot="start" color="secondary"></ion-icon>
             <ion-label>
@@ -58,6 +63,7 @@
     </ion-card>
 
     <!-- Visual Style Card -->
+    <!-- eslint-disable-next-line @angular-eslint/template/prefer-control-flow -->
     <ion-card *ngIf="aboutData()!.visualStyle">
       <ion-card-header>
         <ion-card-title>{{ aboutData()!.visualStyle.title }}</ion-card-title>
@@ -69,12 +75,14 @@
   </div>
 
   <!-- Loading State -->
+  <!-- eslint-disable-next-line @angular-eslint/template/prefer-control-flow -->
   <div class="loading-container" *ngIf="loading()">
     <ion-spinner name="crescent"></ion-spinner>
     <p>{{ 'common.loading' | transloco }}</p>
   </div>
 
   <!-- Error State -->
+  <!-- eslint-disable-next-line @angular-eslint/template/prefer-control-flow -->
   <div class="error-container" *ngIf="error() && !loading()">
     <ion-icon name="alert-circle" size="large" color="danger"></ion-icon>
     <p>{{ error() }}</p>

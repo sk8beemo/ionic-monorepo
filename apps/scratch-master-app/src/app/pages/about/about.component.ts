@@ -28,12 +28,14 @@ interface AboutData {
   };
 }
 
+/* eslint-disable @angular-eslint/prefer-standalone */
 @Component({
   selector: 'app-about',
   standalone: false,
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })
+/* eslint-enable @angular-eslint/prefer-standalone */
 export class AboutComponent implements OnInit, OnDestroy {
   private http = inject(HttpClient);
   private router = inject(Router);

@@ -249,14 +249,53 @@ nx run scratch-master-app:cap --cmd="open android"
 
 Локализация вынесена в отдельную библиотеку `@ionic-monorepo/i18n` в монорепозитории для переиспользования между проектами.
 
-### Структура переводов
+### Архитектура переводов
 
-Файлы переводов находятся в библиотеке `libs/i18n/src/lib/assets/i18n/`:
+Переводы организованы в два уровня:
+
+1. **Глобальные переводы** (`libs/i18n/src/lib/assets/i18n/`) - общие для всех приложений
+   - Содержат только действительно общие ключи: `common.*`, `language.*`
+   - Пример: `common.loading`, `language.russian`
+
+2. **App-specific scope** (`apps/<app-id>/public/assets/i18n/<app-id>/`) - переводы конкретного приложения
+   - Содержат специфичные для приложения ключи
+   - Используются через алиас `app` в шаблонах: `app.menu.play`, `app.home.title`
+   - Загружаются лениво по требованию
+
+### Структура файлов переводов
 
 ```
 libs/i18n/src/lib/assets/i18n/
-├── ru.json    # Русский язык
-└── en.json    # Английский язык
+├── ru.json    # Глобальные переводы (русский)
+└── en.json    # Глобальные переводы (английский)
+
+apps/scratch-master-app/public/assets/i18n/scratch-master-app/
+├── ru.json    # Переводы приложения (русский)
+└── en.json    # Переводы приложения (английский)
+
+apps/driving-exam-app/public/assets/i18n/driving-exam-app/
+├── ru.json    # Переводы приложения (русский)
+└── en.json    # Переводы приложения (английский)
+```
+
+### Настройка в AppModule
+
+```typescript
+import { provideMonorepoI18n } from '@ionic-monorepo/i18n';
+import { TranslocoModule } from '@jsverse/transloco';
+
+@NgModule({
+  imports: [TranslocoModule],
+  providers: [
+    provideHttpClient(),
+    ...provideMonorepoI18n({
+      appId: 'scratch-master-app',  // или 'driving-exam-app'
+      availableLangs: ['ru', 'en'],
+      defaultLang: 'ru',
+    }),
+  ],
+})
+export class AppModule {}
 ```
 
 ### Использование в компонентах
@@ -264,15 +303,20 @@ libs/i18n/src/lib/assets/i18n/
 #### В шаблонах (HTML)
 
 ```html
-<!-- Простое использование -->
-<h1>{{ 'home.title' | transloco }}</h1>
+<!-- Глобальные переводы (без префикса) -->
+<p>{{ 'common.loading' | transloco }}</p>
+<p>{{ 'language.russian' | transloco }}</p>
+
+<!-- App-specific переводы (с префиксом app) -->
+<h1>{{ 'app.home.title' | transloco }}</h1>
+<button>{{ 'app.menu.play' | transloco }}</button>
 
 <!-- С параметрами -->
 <p>{{ 'welcome.message' | transloco: { name: userName } }}</p>
 
 <!-- Структурная директива -->
 <div *transloco="let t">
-  <h1>{{ t('home.title') }}</h1>
+  <h1>{{ t('app.home.title') }}</h1>
 </div>
 ```
 
@@ -283,29 +327,27 @@ import { TranslocoService } from '@jsverse/transloco';
 import { LanguageService } from '@ionic-monorepo/i18n';
 
 export class MyComponent {
-  constructor(
-    private translocoService: TranslocoService,
-    public languageService: LanguageService
-  ) {}
-
+  translocoService = inject(TranslocoService);
+  languageService = inject(LanguageService);
+  
   getTranslation(): string {
-    return this.translocoService.translate('home.title');
+    // Глобальный ключ
+    return this.translocoService.translate('common.loading');
+    
+    // App-specific ключ
+    return this.translocoService.translate('app.home.title');
   }
-
+  
   changeLanguage(): void {
     this.languageService.setLanguage('en');
-    // или
-    this.languageService.toggleLanguage();
   }
 }
 ```
 
 ### Управление языками
 
-Используйте `LanguageService` для управления языками:
-
 ```typescript
-import { LanguageService } from './services/language.service';
+import { LanguageService } from '@ionic-monorepo/i18n';
 
 // Получить текущий язык
 const currentLang = languageService.getCurrentLanguage(); // 'ru' | 'en'
@@ -323,50 +365,85 @@ const languages = languageService.getSupportedLanguages();
 const name = languageService.getLanguageName('ru'); // 'Русский'
 ```
 
+### Добавление переводов
+
+#### Глобальные переводы
+
+Откройте `libs/i18n/src/lib/assets/i18n/{lang}.json` и добавьте ключи в секцию `common` или создайте новую секцию.
+
+#### App-specific переводы
+
+1. Откройте `apps/<app-id>/public/assets/i18n/<app-id>/{lang}.json`
+2. Добавьте ключи (например, в секцию `home` или `menu`)
+3. Используйте в шаблонах с префиксом `app`: `{{ 'app.home.newKey' | transloco }}`
+
 ### Добавление нового языка
 
-1. **Создайте файл перевода** в `libs/i18n/src/lib/assets/i18n/`:
-   ```json
-   // de.json (немецкий)
-   {
-     "common": {
-       "welcome": "Willkommen"
-     }
-   }
-   ```
+1. **Создайте файлы переводов**:
+   - `libs/i18n/src/lib/assets/i18n/{lang}.json` (глобальные)
+   - `apps/<app-id>/public/assets/i18n/<app-id>/{lang}.json` (для каждого приложения)
 
 2. **Обновите конфигурацию** в `app-module.ts`:
    ```typescript
-   provideTransloco({
-     config: {
-       availableLangs: ['ru', 'en', 'de'], // Добавьте новый язык
-       defaultLang: 'ru',
-       // ...
-     }
-   })
+   ...provideMonorepoI18n({
+     appId: 'scratch-master-app',
+     availableLangs: ['ru', 'en', 'de'], // Добавьте новый язык
+     defaultLang: 'ru',
+   }),
    ```
 
-3. **Обновите `LanguageService`** в `libs/i18n/src/lib/services/language.service.ts`:
-   ```typescript
-   private readonly SUPPORTED_LANGUAGES: SupportedLanguage[] = ['ru', 'en', 'de'];
-   ```
+3. **Обновите `LanguageService`** в `libs/i18n/src/lib/services/language.service.ts`
+
+### Валидация переводов
+
+Запустите проверку синхронизации ключей между языками:
+
+```bash
+pnpm i18n:check
+```
+
+Скрипт проверяет синхронизацию ключей между `ru.json` и `en.json` для всех файлов переводов (глобальных и app-specific).
+
+### Pre-commit hooks
+
+В проекте настроены Git pre-commit hooks через **Husky**, которые автоматически проверяют:
+
+1. **Переводы** - если изменены файлы переводов, запускается `i18n:check`
+2. **Линтинг** - проверяется код измененных проектов через `nx affected:lint`
+
+Pre-commit hook автоматически запускается при каждом `git commit`. Если проверки не пройдены, коммит будет отклонен.
+
+Для ручного запуска проверок:
+
+```bash
+# Проверка переводов
+pnpm i18n:check
+
+# Линтинг всех проектов
+pnpm lint:all
+
+# Линтинг только измененных проектов
+pnpm lint:affected
+```
 
 ### Использование библиотеки i18n
 
 Библиотека `@ionic-monorepo/i18n` экспортирует:
+- `provideMonorepoI18n` - провайдер для настройки Transloco с scope'ами
 - `LanguageService` - сервис для управления языками
 - `TranslocoHttpLoaderService` - HTTP loader для загрузки переводов
 - `SupportedLanguage` - тип для поддерживаемых языков
 
 Импортируйте из библиотеки:
 ```typescript
-import { LanguageService, TranslocoHttpLoaderService } from '@ionic-monorepo/i18n';
+import { provideMonorepoI18n, LanguageService } from '@ionic-monorepo/i18n';
 ```
 
 ### Особенности
 
 - ✅ **Runtime переключение** - смена языка без перезагрузки приложения
-- ✅ **Lazy loading** - переводы загружаются по требованию
+- ✅ **Lazy loading scope'ов** - app-specific переводы загружаются по требованию
+- ✅ **Разделение переводов** - каждое приложение не тащит чужие тексты
 - ✅ **TypeScript поддержка** - автодополнение и проверка типов
 - ✅ **Сохранение выбора** - язык сохраняется в localStorage
 - ✅ **Плюрализация** - поддержка множественных форм

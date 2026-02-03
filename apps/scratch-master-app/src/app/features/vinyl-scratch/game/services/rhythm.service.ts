@@ -8,6 +8,7 @@ import { Track } from '../models/track.model';
 export class RhythmService {
   private activeMarkers = signal<Marker[]>([]);
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
 
   /**
@@ -45,7 +46,7 @@ export class RhythmService {
   /**
    * Получить активные маркеры для текущего времени
    */
-  getActiveMarkers(currentTime: number, windowMs: number = 2000): Marker[] {
+  getActiveMarkers(currentTime: number, windowMs = 2000): Marker[] {
     const allMarkers = this.activeMarkers();
     // Возвращаем маркеры, которые должны быть видны в ближайшие windowMs миллисекунд
     // Также показываем маркеры, которые уже прошли, но не более чем на windowMs назад

@@ -7,12 +7,14 @@ import { ScoringService } from './services/scoring.service';
 import { Track } from './models/track.model';
 import { GameState } from './models/game-state.model';
 
+/* eslint-disable @angular-eslint/prefer-standalone */
 @Component({
   selector: 'app-game',
   standalone: false,
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
 })
+/* eslint-enable @angular-eslint/prefer-standalone */
 export class GameComponent implements OnInit, OnDestroy {
   @ViewChild(TurntableComponent) turntableComponent!: TurntableComponent;
 
