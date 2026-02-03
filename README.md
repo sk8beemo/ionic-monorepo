@@ -2,7 +2,7 @@
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
-✨ Ionic Angular приложение в монорепозитории NX с Vite и pnpm ✨.
+✨ Ionic Angular приложения в монорепозитории NX с Vite и pnpm ✨.
 
 ## Архитектура проекта
 
@@ -33,20 +33,13 @@ ionic-monorepo/
 │       ├── project.json        # NX конфигурация библиотеки
 │       └── tsconfig.*.json     # TypeScript конфигурации
 ├── apps/                       # Приложения монорепозитория
-│   └── ionic-app/              # Основное Ionic Angular приложение
+│   ├── scratch-master-app/     # Scratch Master (vinyl-scratch)
+│   ├── driving-exam-app/       # Driving Exam Trainer
+│   └── <app>/                  # Любое приложение
 │       ├── src/
-│       │   ├── app/
-│       │   │   ├── pages/         # Страницы приложения
-│       │   │   │   └── home/     # Пример домашней страницы
-│       │   │   ├── app-module.ts # Главный модуль приложения
-│       │   │   ├── app.routes.ts # Конфигурация роутинга
-│       │   │   └── app.html      # Корневой компонент
-│       │   ├── index.html         # HTML точка входа
-│       │   ├── main.ts            # TypeScript точка входа
-│       │   └── styles.scss        # Глобальные стили (включая Ionic)
-│       ├── vite.config.mts         # Конфигурация Vite
-│       ├── project.json            # NX конфигурация проекта
-│       └── tsconfig.*.json         # TypeScript конфигурации
+│       ├── public/
+│       ├── project.json        # NX конфигурация проекта
+│       └── capacitor.config.ts # Capacitor конфигурация
 ├── nx.json                      # Конфигурация NX workspace
 ├── package.json                # Зависимости и скрипты
 ├── pnpm-workspace.yaml          # Конфигурация pnpm workspace
@@ -100,7 +93,7 @@ pnpm install
 ```sh
 pnpm dev
 # или
-nx serve ionic-app
+nx serve scratch-master-app
 ```
 
 Приложение будет доступно по адресу: http://localhost:4200
@@ -109,21 +102,21 @@ nx serve ionic-app
 ```sh
 pnpm build:prod
 # или
-nx build ionic-app --configuration=production
+nx build scratch-master-app --configuration=production
 ```
 
 ### Тестирование
 ```sh
 pnpm test
 # или
-nx test ionic-app
+nx test scratch-master-app
 ```
 
 ### Линтинг
 ```sh
 pnpm lint
 # или
-nx lint ionic-app
+nx lint scratch-master-app
 ```
 
 ## Мобильные сборки (iOS / Android) через Capacitor
@@ -152,7 +145,7 @@ pnpm install
 ```sh
 pnpm build:prod
 # или
-nx build ionic-app --configuration=production
+nx build scratch-master-app --configuration=production
 ```
 
 #### Шаг 3: Добавление нативных платформ
@@ -161,12 +154,12 @@ nx build ionic-app --configuration=production
 
 ```sh
 # Добавить iOS
-nx run ionic-app:cap --cmd="add ios"
+nx run scratch-master-app:cap --cmd="add ios"
 # или
 pnpm cap:add:ios
 
 # Добавить Android
-nx run ionic-app:cap --cmd="add android"
+nx run scratch-master-app:cap --cmd="add android"
 # или
 pnpm cap:add:android
 ```
@@ -179,17 +172,17 @@ pnpm cap:add:android
 
 ```sh
 # Синхронизация iOS
-nx run ionic-app:cap --cmd="sync ios"
+nx run scratch-master-app:cap --cmd="sync ios"
 # или
 pnpm cap:sync:ios
 
 # Синхронизация Android
-nx run ionic-app:cap --cmd="sync android"
+nx run scratch-master-app:cap --cmd="sync android"
 # или
 pnpm cap:sync:android
 
 # Или синхронизация всех платформ
-nx run ionic-app:cap --cmd="sync"
+nx run scratch-master-app:cap --cmd="sync"
 # или
 pnpm cap:sync
 ```
@@ -198,12 +191,12 @@ pnpm cap:sync
 
 ```sh
 # Открыть iOS проект в Xcode
-nx run ionic-app:cap --cmd="open ios"
+nx run scratch-master-app:cap --cmd="open ios"
 # или
 pnpm cap:open:ios
 
 # Открыть Android проект в Android Studio
-nx run ionic-app:cap --cmd="open android"
+nx run scratch-master-app:cap --cmd="open android"
 # или
 pnpm cap:open:android
 ```
@@ -212,22 +205,22 @@ pnpm cap:open:android
 
 ```sh
 # Запустить на iOS симуляторе
-nx run ionic-app:cap --cmd="run ios"
+nx run scratch-master-app:cap --cmd="run ios"
 # или
 pnpm run:ios
 
 # Запустить на Android эмуляторе
-nx run ionic-app:cap --cmd="run android"
+nx run scratch-master-app:cap --cmd="run android"
 # или
 pnpm run:android
 ```
 
 ### Важные замечания для монорепозитория
 
-1. **Конфигурация находится в папке проекта**: `apps/ionic-app/capacitor.config.ts` (не в корне!)
-2. **Используйте executor `cap`**: команды Capacitor выполняются через `nx run ionic-app:cap --cmd="<команда>"`
+1. **Конфигурация находится в папке проекта**: `apps/scratch-master-app/capacitor.config.ts` (не в корне!)
+2. **Используйте executor `cap`**: команды Capacitor выполняются через `nx run scratch-master-app:cap --cmd="<команда>"`
 3. **Зависимости плагинов**: Capacitor плагины должны быть добавлены в `package.json` в корне монорепозитория
-4. **Путь к сборке**: `webDir` автоматически указывает на `dist/ionic-app` благодаря генератору
+4. **Путь к сборке**: `webDir` автоматически указывает на `dist/scratch-master-app` благодаря генератору
 5. **Все команды через executor**: `add`, `sync`, `open`, `run` - все выполняется через `cap` executor с параметром `cmd`
 
 ### Полезные команды
@@ -246,8 +239,8 @@ pnpm run:ios
 pnpm run:android
 
 # Или через Nx напрямую
-nx run ionic-app:cap --cmd="sync ios"
-nx run ionic-app:cap --cmd="open android"
+nx run scratch-master-app:cap --cmd="sync ios"
+nx run scratch-master-app:cap --cmd="open android"
 ```
 
 ## Локализация (i18n) с Transloco
@@ -381,7 +374,7 @@ import { LanguageService, TranslocoHttpLoaderService } from '@ionic-monorepo/i18
 
 ### Примеры использования
 
-Смотрите реализацию в `HomeComponent` (`apps/ionic-app/src/app/pages/home/`) для примеров использования локализации.
+Смотрите реализацию в `HomeComponent` (`apps/scratch-master-app/src/app/pages/home/`) для примеров использования локализации.
 
 [Learn more about Transloco &raquo;](https://jsverse.gitbook.io/transloco/)
 

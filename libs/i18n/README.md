@@ -54,4 +54,4 @@ export class MyComponent {
 
 ## Файлы переводов
 
-Файлы переводов находятся в `libs/i18n/src/lib/assets/i18n/` и автоматически копируются в `dist/ionic-app/assets/i18n/` при сборке.
+Файлы переводов находятся в `libs/i18n/src/lib/assets/i18n/` и автоматически копируются в `dist/<app>/assets/i18n/` при сборке (например: `dist/scratch-master-app/assets/i18n/`, `dist/driving-exam-app/assets/i18n/`).

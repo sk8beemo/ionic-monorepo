@@ -1,24 +1,24 @@
 {
-  "name": "ionic-app",
+  "name": "scratch-master-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/ionic-app/src",
+  "sourceRoot": "apps/scratch-master-app/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/ionic-app",
-        "index": "apps/ionic-app/src/index.html",
-        "main": "apps/ionic-app/src/main.ts",
-        "tsConfig": "apps/ionic-app/tsconfig.app.json",
+        "outputPath": "dist/scratch-master-app",
+        "index": "apps/scratch-master-app/src/index.html",
+        "main": "apps/scratch-master-app/src/main.ts",
+        "tsConfig": "apps/scratch-master-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/ionic-app/public"
+            "input": "apps/scratch-master-app/public"
           },
           {
             "glob": "**/*",
@@ -26,7 +26,7 @@
             "output": "assets"
           }
         ],
-        "styles": ["apps/ionic-app/src/styles.scss"]
+        "styles": ["apps/scratch-master-app/src/styles.scss"]
       },
       "configurations": {
         "production": {
@@ -60,10 +60,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "ionic-app:build:production"
+          "buildTarget": "scratch-master-app:build:production"
         },
         "development": {
-          "buildTarget": "ionic-app:build:development"
+          "buildTarget": "scratch-master-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "ionic-app:build"
+        "buildTarget": "scratch-master-app:build"
       }
     },
     "lint": {
@@ -81,14 +81,14 @@
       "executor": "@nx/vitest:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../../coverage/ionic-app"
+        "reportsDirectory": "../../coverage/scratch-master-app"
       }
     },
     "serve-static": {
       "continuous": true,
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "ionic-app:build",
+        "buildTarget": "scratch-master-app:build",
         "port": 4200,
         "spa": true
       }

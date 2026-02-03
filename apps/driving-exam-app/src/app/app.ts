@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './app.scss',
 })
 export class App {
-  protected title = 'ionic-app';
+  protected title = 'driving-exam-app';
 }
