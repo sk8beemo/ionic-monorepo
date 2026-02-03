@@ -24,8 +24,7 @@ export class HomeComponent {
   }
 
   onPlayClick(): void {
-    // TODO: Navigate to game screen
-    console.log('Play clicked');
+    this.router.navigate(['/game']);
   }
 
   onAboutClick(): void {

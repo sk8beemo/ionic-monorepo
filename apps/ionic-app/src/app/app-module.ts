@@ -13,9 +13,11 @@ import { appRoutes } from './app.routes';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { TranslocoHttpLoaderService } from '@ionic-monorepo/i18n';
+import { GameComponent } from './features/vinyl-scratch/game/game.component';
+import { TurntableComponent } from './features/vinyl-scratch/game/components/turntable/turntable.component';
 
 @NgModule({
-  declarations: [App, HomeComponent, AboutComponent],
+  declarations: [App, HomeComponent, AboutComponent, GameComponent, TurntableComponent],
   imports: [
     BrowserModule,
     CommonModule,

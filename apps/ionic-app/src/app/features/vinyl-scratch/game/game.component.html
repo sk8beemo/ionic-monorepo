@@ -1,0 +1,102 @@
+<ion-content class="game-content">
+  <div class="game-background"></div>
+
+  <div class="game-container">
+    <!-- Верхняя панель с информацией -->
+    <div class="game-header">
+      <div class="score-section">
+        <div class="score-value">{{ score().total | number }}</div>
+        @if (score().combo > 0) {
+          <div class="combo-info">
+            <span class="combo-label">COMBO</span>
+            <span class="combo-value">x{{ score().combo }}</span>
+            <span class="multiplier">x{{ score().multiplier }}</span>
+          </div>
+        }
+      </div>
+
+      @if (currentTrack()) {
+        <div class="track-info">
+          <div class="track-name">{{ currentTrack()!.name }}</div>
+          <div class="track-artist">{{ currentTrack()!.artist }}</div>
+        </div>
+      }
+
+      <div class="time-info">
+        {{ formattedTime() }}
+      </div>
+    </div>
+
+    <!-- Игровое поле (вертушка) -->
+    <div class="turntable-wrapper">
+      <app-turntable></app-turntable>
+    </div>
+
+    <!-- Нижняя панель управления -->
+    <div class="game-controls">
+      @if (gameState() === 'idle') {
+        <ion-button
+          (click)="startGame()"
+          fill="solid"
+          color="primary"
+          class="control-button"
+        >
+          <ion-icon name="play" slot="start"></ion-icon>
+          Начать
+        </ion-button>
+      }
+
+      @if (gameState() === 'playing') {
+        <ion-button
+          (click)="pauseGame()"
+          fill="outline"
+          color="light"
+          class="control-button"
+        >
+          <ion-icon name="pause" slot="start"></ion-icon>
+          Пауза
+        </ion-button>
+      }
+
+      @if (gameState() === 'paused') {
+        <ion-button
+          (click)="resumeGame()"
+          fill="solid"
+          color="primary"
+          class="control-button"
+        >
+          <ion-icon name="play" slot="start"></ion-icon>
+          Продолжить
+        </ion-button>
+      }
+
+      <ion-button
+        (click)="goToMenu()"
+        fill="clear"
+        color="light"
+        class="control-button"
+      >
+        <ion-icon name="home" slot="start"></ion-icon>
+        Меню
+      </ion-button>
+    </div>
+
+    <!-- Статистика (опционально, можно скрыть/показать) -->
+    @if (gameState() === 'playing' || gameState() === 'paused') {
+      <div class="game-stats">
+        <div class="stat-item">
+          <span class="stat-label">Perfect:</span>
+          <span class="stat-value perfect">{{ score().perfect }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Good:</span>
+          <span class="stat-value good">{{ score().good }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Miss:</span>
+          <span class="stat-value miss">{{ score().miss }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</ion-content>
